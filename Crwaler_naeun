@@ -29,3 +29,37 @@ def crwaler_naeun( ) :
     driver.close()
 
 crwaler_naeun()
+from selenium import webdriver
+import pandas as pd
+import time
+
+def crwaler_naeun( ) :
+
+    ######################### 데이터 삽입 부분 ###################################
+    input_cnt = int(input("키워드 몇 개 넣고 싶어요 : ")) # 4
+    input_keyword = []
+    for i in range( input_cnt ) :
+        input_keyword.append( input( "나은아, 오빠야. 키워드를 내놓으련 :" ) )
+    ########################## 데이터 삽입 부분 ###################################
+
+    ########################## 크롤링 부분 ###################################
+    naeun_list = []
+    driver = webdriver.Chrome(executable_path='./chromedriver')
+
+    for naeun in range( len(input_keyword) ) : # 4
+        url = "https://ad.search.naver.com/search.naver?where=ad&query={}".format( input_keyword[naeun] )
+        driver.get(url = url)
+        time.sleep(0.5)
+
+    for i in range( 25 ) :
+        try :
+            naeun_list.append([ input_keyword[naeun], i+1, driver.find_element_by_css_selector("#content > div > ol > li:nth-child({}) > div.inner > div.url_area > a".format(i+1)).text ])
+        except :
+            pass
+
+    marketer_naeun = pd.DataFrame( naeun_list, columns = ["검색어", "순위", "URL"] )
+    marketer_naeun.to_excel( "./naeun_bot.xlsx", index = None )
+    ########################## 크롤링 부분 ###################################
+    driver.close()
+
+crwaler_naeun()
