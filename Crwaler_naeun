@@ -4,10 +4,10 @@ import time
 
 def crwaler_naeun( ) :
 
-    input_cnt = int(input("키워드 몇 개 넣고 싶어요 : "))
+    input_cnt = int(input("원하는 키워드 입력 : "))
     input_keyword = []
     for i in range( input_cnt ) :
-        input_keyword.append( input( "나은아, 오빠야. 키워드를 내놓으련 :" ) )
+        input_keyword.append( input( "나은아, 오빠에게 키워드 제공 :" ) )
     
     naeun_list = []
     driver = webdriver.Chrome(executable_path='./chromedriver')
